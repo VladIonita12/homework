@@ -38,11 +38,11 @@ class PacketCard extends Component{
     render(){
       
 
-
+      AOS.init();
         return(
 
-            <div class="main " >
-<Card bg="white" text="dark" className="text-center" data-aos="zoom-in">
+            <div class="main ">
+<Card bg="white" text="dark" className="text-center" aos="fade-right">
    <Card.Body>
     <Card.Title>{this.props.item.numePachet}</Card.Title>
    

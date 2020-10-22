@@ -3,6 +3,8 @@ header.masthead {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  margin-top:5vh;
+  margin-bottom: 10vh;
   width: 80vw;
   text-align: center;
   padding-top: 10rem;
@@ -14,7 +16,7 @@ header.masthead {
   background-size: cover;
 }
 header.masthead h1 {
-  font-size: 2.25rem;
+  font-size: 7rem !important;
 }
 @media (min-width: 992px) {
   header.masthead {
@@ -35,6 +37,8 @@ header.masthead h1 {
     font-size: 3.5rem;
   }
 }
+
+
 body {
   margin: 40px;
   padding-bottom: 5vh;
@@ -47,4 +51,13 @@ body {
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr;
  
+}
+@font-face {
+  font-family: fontTitle;
+  src: url(../src/assets/fonts/Letter\ Marker.ttf);
+}
+
+.titleFont{
+  font-family: fontTitle;
+  font-size: 50%;
 }

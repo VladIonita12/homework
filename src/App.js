@@ -8,6 +8,7 @@ import 'animate.css'
 import AOS from 'aos'
 import PacketCard from './components/Packet/packet-component'
 import PachetStore from './store/PachetStore';
+import FormInscriere from './components/FormInscriere/form-inscriere';
 class App extends Component {
 
   constructor(){
@@ -25,14 +26,14 @@ class App extends Component {
   }
   this.cancel = ()  => {
     this.setState({
-      selectedContract:null
+      selectedPachet: null
     })
 }
 
     this.store = new PachetStore();
   }
   async componentDidMount() {
-
+    AOS.init();
     this.store.getPachete()
     
     this.store.emitter.addListener('GET_PCK_SUCCESS', ()=>{
@@ -45,12 +46,14 @@ class App extends Component {
   }
   render(){
     AOS.init();
+    if(this.state.selectedPachet)
+    return <FormInscriere item={this.state.selectedPachet} onCancel={this.cancel}></FormInscriere>
     return (
       <div className="App">
         <div></div>
       
         <div>
-      <Navbar collapseOnSelect expand="lg" bg="white" variant="white" fixed="top">
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
   <Navbar.Brand href="#home">Application</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
@@ -64,22 +67,25 @@ class App extends Component {
   </Navbar.Collapse>
 </Navbar>
 </div>
+
 <header class="masthead animate__animated animate__backInDown">
                     <div class="container h-100">
                         <div class="row h-50 align-items-center justify-content-center text-center">
                             <div class="align-middle">
-                                <h1 class="text-uppercase text-black align-middle font-weight-bold">Event Planner</h1>
+                                <h1 class="  align-middle titleFont">Event Planner</h1>
                                </div>
                               
                         </div>
                     </div>
                 </header>
+                
+                <div class="container" data-aos="fade-right">
 
-                <div class="container">
-  <div class="card-list" >
+
+  <div class="card-list"  >
     
   {
-                    this.state.pachete.map((e,i) => <PacketCard key={i}  item={e} onSelect={this.select} />)
+                    this.state.pachete.map((e,i) => <PacketCard  key={i}  item={e} onSelect={this.select} />)
                     
                     }
    
