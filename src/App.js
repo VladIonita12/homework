@@ -1,51 +1,93 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import NavDropdown from 'react-bootstrap/NavDropdown'
-import 'animate.css/animate.min.css';
+import 'animate.css'
+import AOS from 'aos'
+import PacketCard from './components/Packet/packet-component'
+import PachetStore from './store/PachetStore';
 class App extends Component {
 
   constructor(){
     super();
+    this.state = {
+      pachete: [],
+      selectedPachet:null
+      
+    };
 
+    this.select = (pachet) =>{
+      this.setState({
+          selectedPachet: pachet
+      })
   }
+  this.cancel = ()  => {
+    this.setState({
+      selectedContract:null
+    })
+}
 
+    this.store = new PachetStore();
+  }
+  async componentDidMount() {
+
+    this.store.getPachete()
+    
+    this.store.emitter.addListener('GET_PCK_SUCCESS', ()=>{
+      
+        this.setState({
+            pachete: this.store.pachete
+        })
+        
+    })
+  }
   render(){
+    AOS.init();
     return (
       <div className="App">
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
-  <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <div></div>
+      
+        <div>
+      <Navbar collapseOnSelect expand="lg" bg="white" variant="white" fixed="top">
+  <Navbar.Brand href="#home">Application</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="mr-auto">
       
     </Nav>
     <Nav>
-      <Nav.Link href="#deets">Login</Nav.Link>
+      <Nav.Link>Login</Nav.Link>
       
     </Nav>
   </Navbar.Collapse>
 </Navbar>
-<section className="animate__animated animate__backInLeft">
-                    <div class="container h-100 ">
-                        <div class="row h-100 align-items-center justify-content-center text-center ">
-                            <div class="col-lg-10 align-self-end">
-                                <h1 class="text-uppercase font-weight-bold">Kontract Document Manager</h1>
-                                
-                            </div>
-                            <div class="col-lg-8 align-self-baseline">
-                                
-                            </div>
+</div>
+<header class="masthead animate__animated animate__backInDown">
+                    <div class="container h-100">
+                        <div class="row h-50 align-items-center justify-content-center text-center">
+                            <div class="align-middle">
+                                <h1 class="text-uppercase text-black align-middle font-weight-bold">Event Planner</h1>
+                               </div>
+                              
                         </div>
                     </div>
-                </section>
+                </header>
 
-
+                <div class="container">
+  <div class="card-list" >
+    
+  {
+                    this.state.pachete.map((e,i) => <PacketCard key={i}  item={e} onSelect={this.select} />)
+                    
+                    }
+   
+  </div>
+</div>
 
 </div>
+
 )
   }
 }
