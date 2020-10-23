@@ -11,8 +11,7 @@ class InstaAccount extends Component{
             userPachet: null,
 
         }    
-        this.store = new UserPachetStore();
-        this.store1 = new AccountStore();
+        
     }
     componentDidMount(){
         
@@ -24,9 +23,7 @@ class InstaAccount extends Component{
         return(
             <div className="container">
             <p>hello</p>
-            <p>{this.props.userName}</p>
-            <p> {this.props.val}</p>
-            <p>{this.props.valInd}</p>
+           
 
 
         </div>

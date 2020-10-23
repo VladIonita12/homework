@@ -3,8 +3,9 @@
 import React, {Component, useState} from 'react';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import './insta-frame.css'
 import UserPachetStore from '../../store/UserPachetStore'
-import AccountStore from '../../store/AccountStore'
+
 class InstaFrame extends Component{
 
     constructor(props){
@@ -23,9 +24,10 @@ class InstaFrame extends Component{
         
        
         return(
-            <div className="container">
+            <div className="containerInsta">
             <Card>
-    <Card.Img variant="top" src="holder.js/100px180" />
+    
+    <Card.Header>{this.props.item.numeInsta} <img width="50px" height="50px" src="http://www.clker.com/cliparts/C/m/c/J/g/l/white-round-md.png"></img></Card.Header>
     <Card.Body>
       <Card.Text>
         Some quick example text to build on the card title and make up the bulk

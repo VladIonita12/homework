@@ -14,7 +14,9 @@ class AccountStore{
             
             let data = await response.json()
             
-            this.events = data
+            this.accounts = data
+            console.log(data)
+            console.log(this.accounts)
             
             this.emitter.emit('GET_ACC_SUCCESS')
         }
@@ -45,7 +47,7 @@ class AccountStore{
         }
     }
     
-    async deleteUser(accountId, accountNumber){
+    async deleteAccount(accountId, accountNumber){
          try{
             
             

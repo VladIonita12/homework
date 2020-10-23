@@ -10,17 +10,18 @@ class AccountList extends Component {
     constructor(){
         super()
         this.state= {
-            accounts: null,
+            accounts: [],
             selectedAccount: null,
             isLogout: false,
+            accounts3: []
             
         }
-        this.store = new UserPachetStore();
-        this.store1 = new AccountStore();
+        
         this.add = (account)=>{
             console.log(account)
             console.log(this.props.account.id)
-            this.store1.addAccount(this.props.account.id, account)
+            this.store3.addAccount(this.props.account.id, account)
+
         }
         this.delete = (id)=>{
             this.store1.deleteUser(id)
@@ -43,18 +44,13 @@ class AccountList extends Component {
                 isLogout: !this.state.isLogout
             })
         }
-        
+        this.store = new UserPachetStore();
+        this.store1 = new AccountStore();
+        this.store3 = new AccountStore()
     }
     componentDidMount(){
         this.store.getUserPacket(this.props.account.id)
-        this.store1.getAccounts(this.props.account.id)
         
-      
-        this.store1.emitter.addListener('GET_ACC_SUCCESS',()=>{
-            this.setState({
-                accounts: this.store1.accounts
-            })
-        })
         this.store.emitter.addListener('GET_CONT_SUCCESS', ()=>{
       
             this.setState({
@@ -62,16 +58,33 @@ class AccountList extends Component {
             })
             
         })
+        this.store3.getAccounts(this.props.account.id)
+        this.store3.emitter.addListener("GET_ACC_SUCCESS", ()=>{
+            this.setState({
+                accounts3: this.store3.accounts
+            })
+        })
+        
+            this.store1.getAccounts(this.props.account.id)
+        
+      
+        this.store1.emitter.addListener('GET_ACC_SUCCESS',()=>{
+            this.setState({
+                accounts: this.store1.accounts
+            })
+        })
+        console.log(this.store3.accounts)
+        console.log(this.state.accounts3)
         console.log(this.state.accounts)
         console.log(this.store1.accounts)
     }
     render(){
-        
+        if(this.state.accounts)
         if(this.state.isLogout)
         return <App></App>
 
-        if(this.state.selectedBus){
-            return <InstaAccount item={this.state.selectedBus} onCancel={this.cancel}/>
+        if(this.state.selectedAccount){
+            return <InstaAccount item={this.state.selectedAccount} onCancel={this.cancel}/>
         }
         else{
               return <div className="container">
@@ -84,8 +97,8 @@ class AccountList extends Component {
                     
                     }
                     
-                   {
-                       this.state.accounts.map((x,index) => <InstaFrame key={index} item={x} i={index}></InstaFrame>)
+                   {this.state.accounts3 && 
+                       this.state.accounts3.map((x,index) => <InstaFrame key={index} item={x} i={index}></InstaFrame>)
                    }
                     
                     </div>

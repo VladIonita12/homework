@@ -1,0 +1,9 @@
+
+.card-img, .card-img-bottom, .card-img-top {
+    flex-shrink: 0;
+    width: 50px;
+}
+
+.containerInsta{
+    margin:10px;
+}
