@@ -1,16 +1,14 @@
-import React, { Component, useState, useEffect} from 'react';
+import React, { useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Nav from 'react-bootstrap/Nav'
 import Form from 'react-bootstrap/Form'
-import UserStore from '../../store/UserStore'
-import AccountComponent from '../Account/account-component';
+
 export default function ModalMade(props) {
     const [show, setShow] = useState(false);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [data, setAccount] = useState(null)
-    const[ok,setOk] = useState(false)
+   
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     function validateForm() {

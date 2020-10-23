@@ -6,6 +6,8 @@ import Form from 'react-bootstrap/Form'
 import './form-inscriere.css'
 import AOS from 'aos'
 import PaymentCard from 'react-payment-card-component'
+import AccountComponent from '../Account/account-component';
+import AccountList from '../Account/account-list';
 class FormInscriere extends Component {
     constructor(props) {
         super(props);
@@ -16,7 +18,9 @@ class FormInscriere extends Component {
             password: '',
             passwordConfirm: '',
             checkboxChecked: false,
-            usersData: []
+            usersData: [],
+            account:null,
+            nrAccount:null
         };
         this.store = new UserStore();
         this.handleChange = (evt) => {
@@ -58,10 +62,15 @@ class FormInscriere extends Component {
                             dataIncheiere: incheiere
                         })
 
+                        if(this.state.usersData.length>this.state.nrAccount){
+                        this.state.account=this.state.usersData[this.state.usersData.length-1]
+                            
+                            console.log(this.state.account)
 
                         this.setState({
                             isOk: !this.state.isOk
                         })
+                    }
                     }
                     else alert("Existing account")
                 }
@@ -76,7 +85,8 @@ class FormInscriere extends Component {
         this.store.getUsers()
         this.store.emitter.addListener('GET_USERS_SUCCESS', () => {
             this.setState({
-                usersData: this.store.users
+                usersData: this.store.users,
+                nrAccount:this.state.usersData.length
             })
         })
         
@@ -87,6 +97,8 @@ class FormInscriere extends Component {
     render() {
         AOS.init();
         console.log(this.state.usersData)
+        if(this.state.isOk)
+        return <AccountList account={this.state.account}></AccountList>
         return (
             <div className="form" data-aos="fade-right">
 

@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import BeneficiiStore from '../../store/BeneficiiStore'
@@ -41,7 +41,7 @@ class PacketCard extends Component{
       AOS.init();
         return(
 
-            <div class="main ">
+            <div className="main ">
 <Card bg="white" text="dark" className="text-center" aos="fade-right">
    <Card.Body>
     <Card.Title>{this.props.item.numePachet}</Card.Title>

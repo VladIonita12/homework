@@ -12,7 +12,8 @@ import PachetStore from './store/PachetStore';
 import FormInscriere from './components/FormInscriere/form-inscriere';
 import ModalMade from './components/Modal/modal'
 import UserStore from './store/UserStore';
-import AccountComponent from './components/Account/account-component';
+
+import AccountList from './components/Account/account-list';
 
 class App extends Component {
 
@@ -75,7 +76,7 @@ this.handleAccount = (accValue) => {
     
     AOS.init();
     if(this.state.account)
-  return <AccountComponent account={this.state.account}></AccountComponent>
+  return <AccountList account={this.state.account}></AccountList>
     if(this.state.selectedPachet)
     return <FormInscriere item={this.state.selectedPachet} onCancel={this.cancel}></FormInscriere>
     return (
@@ -124,21 +125,21 @@ this.handleAccount = (accValue) => {
 </Navbar>
 </div>
 
-<header class="masthead animate__animated animate__backInDown">
-                    <div class="container h-100">
-                        <div class="row h-50 align-items-center justify-content-center text-center">
-                            <div class="align-middle">
-                                <h1 class="  align-middle titleFont">Event Planner</h1>
+<header className="masthead animate__animated animate__backInDown">
+                    <div className="container h-100">
+                        <div className="row h-50 align-items-center justify-content-center text-center">
+                            <div className="align-middle">
+                                <h1 className="  align-middle titleFont">Event Planner</h1>
                                </div>
                               
                         </div>
                     </div>
                 </header>
                 
-                <div class="container" data-aos="fade-right">
+                <div className="container" data-aos="fade-right">
 
 
-  <div class="card-list"  >
+  <div className="card-list"  >
     
   {
                     this.state.pachete.map((e,i) => <PacketCard  key={i}  item={e} onSelect={this.select} />)
