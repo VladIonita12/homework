@@ -5,7 +5,7 @@ import UserStore from '../../store/UserStore'
 import Form from 'react-bootstrap/Form'
 import './form-inscriere.css'
 import AOS from 'aos'
-
+import PaymentCard from 'react-payment-card-component'
 class FormInscriere extends Component {
     constructor(props) {
         super(props);
@@ -51,6 +51,7 @@ class FormInscriere extends Component {
                         this.store.addUser({
                             numeClient: this.state.nume,
                             prenumeClient: this.state.prenume,
+                            password: this.state.password,
                             emailClient:this.state.email,
                             tipClient: this.props.item.numePachet,
                             dataPlata: data,
@@ -123,10 +124,24 @@ class FormInscriere extends Component {
                             onChange={this.handleChange}
                             checked={this.state.checkboxChecked} />
                     </Form.Group>
+                    <PaymentCard
+      bank="ING"
+      model= "Debit"
+      type="platinum"
+      brand="mastercard"
+      number="1111111111111111"
+      cvv="202"
+      holderName="Mare Cumparator"
+      expiration="12/20"
+      flipped={false}
+    />
+    <br></br>
                     <Button variant="primary" onClick={this.submit}>
                         Submit
   </Button>
+  
                 </Form>
+
                 <hr></hr>
                 <Button onClick={this.props.onCancel}>Cancel</Button>
             </div>

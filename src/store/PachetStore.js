@@ -1,5 +1,5 @@
 import {EventEmitter} from 'fbemitter'
-const SERVER = 'http://3.17.181.163:8080'
+const SERVER = 'http://52.15.124.47:8080'
 
 class PachetStore{
     
