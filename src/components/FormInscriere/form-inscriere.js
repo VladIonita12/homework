@@ -1,12 +1,12 @@
-import React, { Component, useState } from 'react';
-import Card from 'react-bootstrap/Card'
+import React, { Component } from 'react';
+
 import Button from 'react-bootstrap/Button'
 import UserStore from '../../store/UserStore'
 import Form from 'react-bootstrap/Form'
 import './form-inscriere.css'
 import AOS from 'aos'
 import PaymentCard from 'react-payment-card-component'
-import AccountComponent from '../Account/account-component';
+
 import AccountList from '../Account/account-list';
 class FormInscriere extends Component {
     constructor(props) {
@@ -19,8 +19,9 @@ class FormInscriere extends Component {
             passwordConfirm: '',
             checkboxChecked: false,
             usersData: [],
-            account:null,
-            nrAccount:null
+            account: null,
+            nrAccount: null,
+            isOk: false
         };
         this.store = new UserStore();
         this.handleChange = (evt) => {
@@ -29,14 +30,14 @@ class FormInscriere extends Component {
                 checkboxChecked: evt.target.checked
             })
         }
-        
+
         this.submit = () => {
 
             if (this.state.checkboxChecked) {
                 if (this.state.password === this.state.passwordConfirm) {
                     var ok = false
                     for (var i = 0; i < this.state.usersData.length; i++) {
-                       
+
                         if (this.state.usersData[i].emailClient === this.state.email) {
                             console.log(this.state.usersData[i].emailClient)
                             ok = true
@@ -45,32 +46,32 @@ class FormInscriere extends Component {
                     if (ok === false) {
                         let dataAcum = new Date();
                         let an = dataAcum.getFullYear()
-                        let luna = dataAcum.getMonth()+1
-                        let lunaInchere = dataAcum.getMonth()+2
-                        let zi = dataAcum.getDay()
-                        console.log(an+"/"+luna+"/"+zi)
-                        console.log(an+"/"+luna+1+"/"+zi)
-                        let data=an+"-"+luna+"-"+zi
-                        let incheiere = an+"-"+lunaInchere+"-"+zi
+                        let luna = dataAcum.getMonth() + 1
+                        let lunaInchere = dataAcum.getMonth() + 2
+                        let zi = dataAcum.getDate()
+                        console.log(an + "/" + luna + "/" + zi)
+                        console.log(an + "/" + luna + 1 + "/" + zi)
+                        let data = an + "-" + luna + "-" + zi
+                        let incheiere = an + "-" + lunaInchere + "-" + zi
                         this.store.addUser({
                             numeClient: this.state.nume,
                             prenumeClient: this.state.prenume,
                             password: this.state.password,
-                            emailClient:this.state.email,
+                            emailClient: this.state.email,
                             tipClient: this.props.item.numePachet,
                             dataPlata: data,
                             dataIncheiere: incheiere
                         })
 
-                        if(this.state.usersData.length>this.state.nrAccount){
-                        this.state.account=this.state.usersData[this.state.usersData.length-1]
-                            
+                        if (this.state.usersData.length > this.state.nrAccount) {
+                            this.state.account = this.state.usersData[this.state.usersData.length - 1]
+
                             console.log(this.state.account)
 
-                        this.setState({
-                            isOk: !this.state.isOk
-                        })
-                    }
+                            this.setState({
+                                isOk: !this.state.isOk
+                            })
+                        }
                     }
                     else alert("Existing account")
                 }
@@ -86,10 +87,10 @@ class FormInscriere extends Component {
         this.store.emitter.addListener('GET_USERS_SUCCESS', () => {
             this.setState({
                 usersData: this.store.users,
-                nrAccount:this.state.usersData.length
+                nrAccount: this.state.usersData.length
             })
         })
-        
+
     }
 
 
@@ -97,8 +98,8 @@ class FormInscriere extends Component {
     render() {
         AOS.init();
         console.log(this.state.usersData)
-        if(this.state.isOk)
-        return <AccountList account={this.state.account}></AccountList>
+        if (this.state.isOk)
+            return <AccountList account={this.state.account}></AccountList>
         return (
             <div className="form" data-aos="fade-right">
 
@@ -137,21 +138,21 @@ class FormInscriere extends Component {
                             checked={this.state.checkboxChecked} />
                     </Form.Group>
                     <PaymentCard
-      bank="ING"
-      model= "Debit"
-      type="platinum"
-      brand="mastercard"
-      number="1111111111111111"
-      cvv="202"
-      holderName="Mare Cumparator"
-      expiration="12/20"
-      flipped={false}
-    />
-    <br></br>
+                        bank="ING"
+                        model="Debit"
+                        type="platinum"
+                        brand="mastercard"
+                        number="1111111111111111"
+                        cvv="202"
+                        holderName="Mare Cumparator"
+                        expiration="12/20"
+                        flipped={false}
+                    />
+                    <br></br>
                     <Button variant="primary" onClick={this.submit}>
                         Submit
   </Button>
-  
+
                 </Form>
 
                 <hr></hr>

@@ -33,7 +33,7 @@ class InstaFrame extends Component{
             <div className="containerInsta">
             <Card>
     
-    <Card.Header>{this.props.item.numeInsta} <img width="50px" height="50px" src="http://www.clker.com/cliparts/C/m/c/J/g/l/white-round-md.png"></img></Card.Header>
+    <Card.Header>{this.props.item.numeInsta} <img width="50px" alt="img" height="50px" src="http://www.clker.com/cliparts/C/m/c/J/g/l/white-round-md.png"></img></Card.Header>
     <Card.Body>
       <Card.Text>
         Some quick example text to build on the card title and make up the bulk
