@@ -1,10 +1,10 @@
 
 
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import './insta-frame.css'
-import UserPachetStore from '../../store/UserPachetStore'
+
 
 class InstaFrame extends Component{
 

@@ -19,12 +19,11 @@ class UserPachetStore{
             this.packets = data1
             if(data1)
             for(let i=0;i< data1.length;i++){
-                console.log(data)
-                console.log(data1)
+                
                 if(data.tipClient===data1[i].numePachet){
                 this.numarCont = data1[i].numarConturi
                 this.emitter.emit('GET_CONT_SUCCESS')
-                console.log(this.numarCont)
+                
             }
             }
             

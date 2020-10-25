@@ -19,8 +19,7 @@ class AccountList extends Component {
         }
 
         this.add = (account) => {
-            console.log(account)
-            console.log(this.props.account.id)
+
             this.store3.addAccount(this.props.account.id, account)
 
         }
@@ -74,10 +73,7 @@ class AccountList extends Component {
                 accounts: this.store1.accounts
             })
         })
-        console.log(this.store3.accounts)
-        console.log(this.state.accounts3)
-        console.log(this.state.accounts)
-        console.log(this.store1.accounts)
+
     }
     render() {
 

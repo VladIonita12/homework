@@ -17,37 +17,37 @@ import AccountList from './components/Account/account-list';
 
 class App extends Component {
 
-  constructor(){
+  constructor() {
     super();
     this.state = {
       pachete: [],
-      selectedPachet:null,
-      show:false,
+      selectedPachet: null,
+      show: false,
       setShow: false,
-      usersData:null,
+      usersData: null,
       go: false,
-      account:null
+      account: null
     };
 
-    this.select = (pachet) =>{
+    this.select = (pachet) => {
       this.setState({
-          selectedPachet: pachet
+        selectedPachet: pachet
       })
-  }
-  this.cancel = ()  => {
-    this.setState({
-      selectedPachet: null
-    })
-   
-}
-this.handleAccount = (accValue) => {
-  console.log(accValue)
-  this.setState({account: accValue});
-  
-}
+    }
+    this.cancel = () => {
+      this.setState({
+        selectedPachet: null
+      })
 
-  this.handleClose = () => {this.setState({setShow:false})}
-  this.handleShow = () => {this.setState({setShow:true})}
+    }
+    this.handleAccount = (accValue) => {
+
+      this.setState({ account: accValue });
+
+    }
+
+    this.handleClose = () => { this.setState({ setShow: false }) }
+    this.handleShow = () => { this.setState({ setShow: true }) }
     this.store = new PachetStore();
     this.store1 = new UserStore();
   }
@@ -55,103 +55,103 @@ this.handleAccount = (accValue) => {
     AOS.init();
     this.store.getPachete()
     this.store1.getUsers()
-    
-    this.store1.emitter.addListener('GET_USERS_SUCCESS', ()=>{
-    
+
+    this.store1.emitter.addListener('GET_USERS_SUCCESS', () => {
+
       this.setState({
-          usersData : this.store1.users
+        usersData: this.store1.users
       })
-      
-  })
-    this.store.emitter.addListener('GET_PCK_SUCCESS', ()=>{
-      
-        this.setState({
-            pachete: this.store.pachete
-        })
-        
+
+    })
+    this.store.emitter.addListener('GET_PCK_SUCCESS', () => {
+
+      this.setState({
+        pachete: this.store.pachete
+      })
+
     })
 
   }
-  render(){
-    
+  render() {
+
     AOS.init();
-    if(this.state.account)
-  return <AccountList account={this.state.account}></AccountList>
-    if(this.state.selectedPachet)
-    return <FormInscriere item={this.state.selectedPachet} onCancel={this.cancel}></FormInscriere>
+    if (this.state.account)
+      return <AccountList account={this.state.account}></AccountList>
+    if (this.state.selectedPachet)
+      return <FormInscriere item={this.state.selectedPachet} onCancel={this.cancel}></FormInscriere>
     return (
       <div className="App">
-        
-       
-        
-      
 
-       <Modal
-         show={this.state.show}
-         onHide={this.handleClose}
-         backdrop="static"
-         keyboard={false}
-       >
-         <Modal.Header closeButton>
-           <Modal.Title>Modal title</Modal.Title>
-         </Modal.Header>
-         <Modal.Body>
-           I will not close if you click outside me. Don't even try to press
-           escape key.
+
+
+
+
+        <Modal
+          show={this.state.show}
+          onHide={this.handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Modal title</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            I will not close if you click outside me. Don't even try to press
+            escape key.
          </Modal.Body>
-         <Modal.Footer>
-           <Button variant="secondary" onClick={this.handleClose}>
-             Close
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
            </Button>
-           <Button variant="primary">Understood</Button>
-         </Modal.Footer>
-       </Modal>
-     
+            <Button variant="primary">Understood</Button>
+          </Modal.Footer>
+        </Modal>
+
         <div></div>
-      
+
         <div>
-      <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
-  <Navbar.Brand>Event Planner</Navbar.Brand>
-  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-  <Navbar.Collapse id="responsive-navbar-nav">
-    <Nav className="mr-auto">
-      
-    </Nav>
-    <Nav>
-    { this.state.usersData && <ModalMade onSelectAccount={this.handleAccount} storage={this.state.usersData}></ModalMade>
-  }
-    </Nav>
-  </Navbar.Collapse>
-</Navbar>
-</div>
+          <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
+            <Navbar.Brand>Event Planner</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="mr-auto">
 
-<header className="masthead animate__animated animate__backInDown">
-                    <div className="container h-100">
-                        <div className="row h-50 align-items-center justify-content-center text-center">
-                            <div className="align-middle">
-                                <h1 className="  align-middle titleFont">Event Planner</h1>
-                               </div>
-                              
-                        </div>
-                    </div>
-                </header>
-                
-                <div className="container" data-aos="fade-right">
+              </Nav>
+              <Nav>
+                {this.state.usersData && <ModalMade onSelectAccount={this.handleAccount} storage={this.state.usersData}></ModalMade>
+                }
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </div>
+
+        <header className="masthead animate__animated animate__backInDown">
+          <div className="container h-100">
+            <div className="row h-50 align-items-center justify-content-center text-center">
+              <div className="align-middle">
+                <h1 className="  align-middle titleFont">Event Planner</h1>
+              </div>
+
+            </div>
+          </div>
+        </header>
+
+        <div className="container" data-aos="fade-right">
 
 
-  <div className="card-list"  >
-    
-  {
-                    this.state.pachete.map((e,i) => <PacketCard  key={i}  item={e} onSelect={this.select} />)
-                    
-                    }
-   
-  </div>
-</div>
+          <div className="card-list"  >
 
-</div>
+            {
+              this.state.pachete.map((e, i) => <PacketCard key={i} item={e} onSelect={this.select} />)
 
-)
+            }
+
+          </div>
+        </div>
+
+      </div>
+
+    )
   }
 }
 

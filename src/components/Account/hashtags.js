@@ -14,10 +14,7 @@ class HashTag extends Component{
             userPachet: null,
 
         }    
-        this.select = () =>{
-          this.props.onSelect(this.props.item)
-          
-      }
+        
         this.delete = () =>{
           this.props.onDelete(this.props.item.id)
       }

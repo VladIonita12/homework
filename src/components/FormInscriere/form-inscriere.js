@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form'
 import './form-inscriere.css'
 import AOS from 'aos'
 import PaymentCard from 'react-payment-card-component'
-
 import AccountList from '../Account/account-list';
 class FormInscriere extends Component {
     constructor(props) {
@@ -49,8 +48,7 @@ class FormInscriere extends Component {
                         let luna = dataAcum.getMonth() + 1
                         let lunaInchere = dataAcum.getMonth() + 2
                         let zi = dataAcum.getDate()
-                        console.log(an + "/" + luna + "/" + zi)
-                        console.log(an + "/" + luna + 1 + "/" + zi)
+                       
                         let data = an + "-" + luna + "-" + zi
                         let incheiere = an + "-" + lunaInchere + "-" + zi
                         this.store.addUser({
@@ -66,7 +64,7 @@ class FormInscriere extends Component {
                         if (this.state.usersData.length > this.state.nrAccount) {
                             this.state.account = this.state.usersData[this.state.usersData.length - 1]
 
-                            console.log(this.state.account)
+                            
 
                             this.setState({
                                 isOk: !this.state.isOk
@@ -97,7 +95,7 @@ class FormInscriere extends Component {
 
     render() {
         AOS.init();
-        console.log(this.state.usersData)
+        
         if (this.state.isOk)
             return <AccountList account={this.state.account}></AccountList>
         return (
@@ -106,11 +104,11 @@ class FormInscriere extends Component {
                 <Form >
                     <h1>Formular de plata</h1>
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Group controlId="formBasicPassword">
+                        <Form.Group controlId="formBasicNume">
                             <Form.Label>Nume</Form.Label>
                             <Form.Control value={this.state.nume} name="nume" onChange={this.handleChange} />
                         </Form.Group>
-                        <Form.Group controlId="formBasicPassword">
+                        <Form.Group controlId="formBasicPrenume">
                             <Form.Label>Prenume</Form.Label>
                             <Form.Control value={this.state.prenume} name="prenume" onChange={this.handleChange} />
                         </Form.Group>
@@ -125,7 +123,7 @@ class FormInscriere extends Component {
                         <Form.Label>Parola</Form.Label>
                         <Form.Control value={this.state.password} name="password" onChange={this.handleChange} type="password" />
                     </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
+                    <Form.Group controlId="formBasicPasswordConfirm">
                         <Form.Label>Confirma parola</Form.Label>
                         <Form.Control value={this.state.passwordConfirm} name="passwordConfirm" onChange={this.handleChange} type="password" />
                     </Form.Group>

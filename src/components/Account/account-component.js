@@ -56,13 +56,13 @@ class AccountComponent extends Component {
     }
     render() {
 
-        console.log(this.state.value)
+        
 
         return (
             <div className="container">
 
 
-                <div> <Form.Group controlId="formBasicEmail">
+                <div> <Form.Group>
                     <Form.Label>{this.props.number + 1}. Instagram Account</Form.Label>
                     <Form.Control value={this.state.value} name='value' placeholder="Enter Account" onChange={this.handleChange} />
                 </Form.Group>

@@ -18,12 +18,16 @@ class InstaAccount extends Component {
             time: 0,
             timeEnd: 0,
             dataIncepere: '',
-            dataIncheiere: ''
+            dataIncheiere: '',
+            hashtag:'#'
 
         }
         this.cancel = () => {
             this.props.onCancel()
         }
+
+      
+
         this.handleChange = (evt) => {
             this.setState({
                 [evt.target.name]: evt.target.value
@@ -32,9 +36,19 @@ class InstaAccount extends Component {
 
         this.store = new EventStore()
         this.store1 = new HashtagStore()
+
+       
+
         this.getPickerValue = value => {
             console.log(value);
         };
+
+        this.saveHashtag = () =>{
+            this.store1.addHashtag(this.props.accountId, this.props.item.id, this.state.events[this.state.events.length - 1].id,this.state.hashtag)
+            this.setState({
+                hashtag:'#'
+            })
+        }
 
         this.handleTimeChange = (time) => {
             console.log(time);
@@ -64,7 +78,7 @@ class InstaAccount extends Component {
             else return false
         }
         this.saveValue = () => {
-            
+
 
             this.store.addEvents(this.props.accountId, this.props.item.id, {
                 varstaMin: this.state.varstaMinima,
@@ -127,25 +141,29 @@ class InstaAccount extends Component {
                 <Form >
                     <h1>Formular creare eveniment</h1>
 
-                    <Form.Group controlId="formBasicPassword">
+                    <Form.Group controlId="formAgeMin">
                         <Form.Label>Varsta minima</Form.Label>
                         <Form.Control value={this.state.varstaMinima} name="varstaMinima" onChange={this.handleChange} type="number" />
                     </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
+                    <Form.Group controlId="formAgeMax">
                         <Form.Label>Varsta Maxima</Form.Label>
                         <Form.Control value={this.state.varstaMaxima} name="varstaMaxima" onChange={this.handleChange} type="number" />
                     </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
+                    <Form.Group controlId="formDataIncepere">
                         <Form.Label>Data Incepere</Form.Label>
                         <Form.Control value={this.state.dataIncepere} name="dataIncepere" onChange={this.handleChange} type="date" />
                         <TimePicker name="timeStart" onChange={this.handleTimeChange} value={this.state.timeStart} start="00:00" end="23:59" step={10} />
                     </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
+                    <Form.Group controlId="formDataIncheiere">
                         <Form.Label>Data Incheiere</Form.Label>
                         <Form.Control value={this.state.dataIncheiere} name="dataIncheiere" onChange={this.handleChange} type="date" />
                         <TimePicker name="timeEnd" onChange={this.handleTimeChange1} value={this.state.timeEnd} start="00:00" end="23:59" step={10} />
                     </Form.Group>
-
+                    <Form.Group controlId="formHashtag">
+                        <Form.Label>Adaugare Hashtag</Form.Label>
+                        <Form.Control value={this.state.hashtag} name="hashtag" onChange={this.handleChange} />
+                        <Button onClick={this.saveHashtag}>Save hashtag</Button>
+                    </Form.Group>
 
 
 
@@ -162,6 +180,7 @@ class InstaAccount extends Component {
                     <p> cu varsta cuprinsa intre {this.state.events[index].varstaMin} si {this.state.events[index].varstaMax}</p>
                     <hr></hr>
                 </div>)}
+
             </div >
         )
     }

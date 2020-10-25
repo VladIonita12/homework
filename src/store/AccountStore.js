@@ -15,8 +15,7 @@ class AccountStore{
             let data = await response.json()
             
             this.accounts = data
-            console.log(data)
-            console.log(this.accounts)
+            
             
             this.emitter.emit('GET_ACC_SUCCESS')
         }
