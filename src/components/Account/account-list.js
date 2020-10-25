@@ -4,6 +4,7 @@ import AccountStore from '../../store/AccountStore'
 import AccountComponent from './account-component'
 import InstaAccount from './insta-account'
 import App from '../../App'
+import './account-list.css'
 import Button from 'react-bootstrap/Button'
 import InstaFrame from './insta-frame'
 class AccountList extends Component {
@@ -24,11 +25,11 @@ class AccountList extends Component {
 
         }
         this.delete = (id)=>{
-            this.store1.deleteUser(id)
+            this.store3.deleteAccount(this.props.account.id,id)
         }
         
         
-        this.select = (account) =>{
+        this.select = (account) =>{ 
             
             this.setState({
                 selectedAccount: account
@@ -79,26 +80,30 @@ class AccountList extends Component {
         console.log(this.store1.accounts)
     }
     render(){
-        if(this.state.accounts)
+        
         if(this.state.isLogout)
         return <App></App>
 
         if(this.state.selectedAccount){
-            return <InstaAccount item={this.state.selectedAccount} onCancel={this.cancel}/>
+           return <InstaAccount onCancel={this.cancel}  item={this.state.selectedAccount} accountId={this.props.account.id}></InstaAccount>
         }
         else{
               return <div className="container">
+                  <div>
                   <Button onClick={this.logout}>LogOut</Button>
+                  <Button className="margin">Reinnoire plata</Button>
+                    </div>
                     <h2>Buna, {this.props.account.numeClient}</h2>
             <h2>Tip Pachet: {this.props.account.tipClient}</h2>
+            <h3>Pachetul va expira pe: {this.props.account.dataIncheiere}</h3>
           
-                    {
-                    Array.from(Array(this.state.userPachet)).map((x, index) => <AccountComponent key={index} id={this.props.account.id} number={index} item={x} onDelete={this.delete} onSave={this.add} onSelect={this.select} />)
+                    { this.state.accounts3 && 
+                    Array.from(Array(this.state.userPachet)).map((x, index) => <AccountComponent key={index} nrConturi={this.state.userPachet} nrConturiFacute={this.state.accounts3.length} id={this.props.account.id}  number={index} item={x} onDelete={this.delete} onSave={this.add} onSelect={this.select} />)
                     
                     }
                     
                    {this.state.accounts3 && 
-                       this.state.accounts3.map((x,index) => <InstaFrame key={index} item={x} i={index}></InstaFrame>)
+                       this.state.accounts3.map((x,index) => <InstaFrame key={index} onSelect={this.select} onDelete={this.delete} item={x} i={index}></InstaFrame>)
                    }
                     
                     </div>

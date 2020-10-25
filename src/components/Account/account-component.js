@@ -42,6 +42,12 @@ class AccountComponent extends Component{
         this.isOk = () =>{
             this.props.item = this.state.value
         }
+
+        this.tooMany = () =>
+        {
+            if(this.props.nrConturiFacute>=this.props.nrConturi)
+            return true;
+        }
         
     }
     componentDidMount(){
@@ -61,7 +67,7 @@ class AccountComponent extends Component{
    <Form.Label>{this.props.number+1}. Instagram Account</Form.Label>
     <Form.Control value={this.state.value} name='value' placeholder="Enter Account" onChange={this.handleChange}  />
     </Form.Group>
-    <Button  onClick={this.save} >Save</Button>
+    <Button  onClick={this.save} disabled={this.tooMany()}>Save</Button>
     
    </div>
        

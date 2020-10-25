@@ -111,7 +111,7 @@ this.handleAccount = (accValue) => {
       
         <div>
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
-  <Navbar.Brand href="#home">Application</Navbar.Brand>
+  <Navbar.Brand>Event Planner</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="mr-auto">

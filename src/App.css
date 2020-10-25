@@ -15,6 +15,9 @@ header.masthead {
   background-attachment: scroll;
   background-size: cover;
 }
+
+
+
 header.masthead h1 {
   font-size: 7rem !important;
 }
