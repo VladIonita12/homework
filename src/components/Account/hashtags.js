@@ -1,10 +1,10 @@
 
 
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import './insta-frame.css'
-import UserPachetStore from '../../store/UserPachetStore'
+
 
 class HashTag extends Component{
 
@@ -16,7 +16,7 @@ class HashTag extends Component{
         }    
         
         this.delete = () =>{
-          this.props.onDelete(this.props.item.id)
+          this.props.onDelete(this.props.item)
       }
     }
     componentDidMount(){
@@ -27,14 +27,14 @@ class HashTag extends Component{
         
        
         return(
-            <div className="containerInsta">
+            <div >
             <Card>
     
     
     <Card.Body>
       <Card.Text>
-        Some quick example text to build on the card title and make up the bulk
-        of the card's content.
+        {this.props.item.hashtag+"  "}     
+        <Button onClick={this.delete}>Delete</Button>
       </Card.Text>
     </Card.Body>
     

@@ -7,6 +7,18 @@ import './form-inscriere.css'
 import AOS from 'aos'
 import PaymentCard from 'react-payment-card-component'
 import AccountList from '../Account/account-list';
+import Alert from 'react-bootstrap/Alert'
+
+class ScrollToTopOnMount extends React.Component {
+    componentDidMount() {
+      window.scrollTo(0, 0);
+    }
+  
+    render() {
+      return null;
+    }
+  }
+
 class FormInscriere extends Component {
     constructor(props) {
         super(props);
@@ -31,7 +43,8 @@ class FormInscriere extends Component {
         }
 
         this.submit = () => {
-
+            var regUser = /.{3,}/
+            var regParola = /.{8,}/
             if (this.state.checkboxChecked) {
                 if (this.state.password === this.state.passwordConfirm) {
                     var ok = false
@@ -43,12 +56,16 @@ class FormInscriere extends Component {
                         }
                     }
                     if (ok === false) {
+                        if(regUser.test(this.state.nume) && regUser.test(this.state.prenume)){
+                            if(regParola.test(this.state.password)){
                         let dataAcum = new Date();
                         let an = dataAcum.getFullYear()
                         let luna = dataAcum.getMonth() + 1
                         let lunaInchere = dataAcum.getMonth() + 2
                         let zi = dataAcum.getDate()
-                       
+                        this.setState({
+                            nrAccount: this.state.usersData.length
+                          })
                         let data = an + "-" + luna + "-" + zi
                         let incheiere = an + "-" + lunaInchere + "-" + zi
                         this.store.addUser({
@@ -61,15 +78,20 @@ class FormInscriere extends Component {
                             dataIncheiere: incheiere
                         })
 
-                        if (this.state.usersData.length > this.state.nrAccount) {
-                            this.state.account = this.state.usersData[this.state.usersData.length - 1]
-
+                        
+                            this.store.getUsers()
+                            this.setState({
+                                account : this.store.users[this.store.users.length - 1]
+                            })
+                           
                             
-
                             this.setState({
                                 isOk: !this.state.isOk
                             })
                         }
+                        else alert("Parola trebuie sa aiba 8 caractere")
+                        }
+                        else alert("Numele si prenumele trebuie sa aiba minim 3 caractere")
                     }
                     else alert("Existing account")
                 }
@@ -96,21 +118,25 @@ class FormInscriere extends Component {
     render() {
         AOS.init();
         
-        if (this.state.isOk)
-            return <AccountList account={this.state.account}></AccountList>
-        return (
+        if (this.state.isOk && this.store.users.length>this.state.nrAccount){
+            
+            
+            
+            return <AccountList account={this.state.usersData[this.state.usersData.length-1]}></AccountList>
+        }
+            return (
             <div className="form" data-aos="fade-right">
-
+                <ScrollToTopOnMount />
                 <Form >
-                    <h1>Formular de plata</h1>
+                <Alert className="text-center" variant="dark"><h2>Formular de plată</h2></Alert>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Group controlId="formBasicNume">
                             <Form.Label>Nume</Form.Label>
-                            <Form.Control value={this.state.nume} name="nume" onChange={this.handleChange} />
+                            <Form.Control value={this.state.nume} name="nume" pattern=".{3,}" title="3 sau mai multe caractere" onChange={this.handleChange} />
                         </Form.Group>
                         <Form.Group controlId="formBasicPrenume">
                             <Form.Label>Prenume</Form.Label>
-                            <Form.Control value={this.state.prenume} name="prenume" onChange={this.handleChange} />
+                            <Form.Control value={this.state.prenume} pattern=".{3,}" title="3 sau mai multe caractere" name="prenume" onChange={this.handleChange} />
                         </Form.Group>
                         <Form.Label>Email address</Form.Label>
                         <Form.Control value={this.state.email} name="email" onChange={this.handleChange} type="email" />
@@ -121,17 +147,17 @@ class FormInscriere extends Component {
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Parola</Form.Label>
-                        <Form.Control value={this.state.password} name="password" onChange={this.handleChange} type="password" />
+                        <Form.Control value={this.state.password} name="password" pattern=".{8,}" title="8 sau mai multe caractere" onChange={this.handleChange} type="password" />
                     </Form.Group>
                     <Form.Group controlId="formBasicPasswordConfirm">
                         <Form.Label>Confirma parola</Form.Label>
-                        <Form.Control value={this.state.passwordConfirm} name="passwordConfirm" onChange={this.handleChange} type="password" />
+                        <Form.Control value={this.state.passwordConfirm} pattern=".{8,}" title="8 sau mai multe caractere" name="passwordConfirm" onChange={this.handleChange} type="password" />
                     </Form.Group>
 
                     <Form.Group controlId="formBasicCheckbox">
                         <Form.Check required type="checkbox"
                             name="checkboxChecked"
-                            label="Sunt de accord cu Termenii si Conditiile"
+                            label="Sunt de accord cu Termenii si Conditiile noastre, incluzand prelucrarea datelor (GDPR)"
                             onChange={this.handleChange}
                             checked={this.state.checkboxChecked} />
                     </Form.Group>
@@ -142,7 +168,7 @@ class FormInscriere extends Component {
                         brand="mastercard"
                         number="1111111111111111"
                         cvv="202"
-                        holderName="Mare Cumparator"
+                        holderName="Cumparator"
                         expiration="12/20"
                         flipped={false}
                     />

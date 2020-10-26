@@ -6,15 +6,26 @@ class HashtagStore{
     constructor(){
         this.hashtags = []
         this.emitter = new EventEmitter()
-        
+        this.events = []
     }
-    async getHashtags(accountId,instaId,eventId){
+    async getHashtags(accountId,instaId){
         try{
+
+            let response1 = await fetch(`${SERVER}/userdata/${accountId}/accounts/${instaId}/events`)
+
+            let data1 = await response1.json()
+            
+            let events = data1
+
+            var eventId = events[events.length-1].id
+
             let response = await fetch(`${SERVER}/userdata/${accountId}/accounts/${instaId}/events/${eventId}/hashtags`)
             
             let data = await response.json()
             
             this.hashtags = data
+
+
             
             
             this.emitter.emit('GET_HASH_SUCCESS')
@@ -25,10 +36,17 @@ class HashtagStore{
         }
     }
     
-    async addHashtag(accountId, instaId, eventId, hashtag){
+    async addHashtag(accountId, instaId, hashtag){
         try{
             
+            let response1 = await fetch(`${SERVER}/userdata/${accountId}/accounts/${instaId}/events`)
+
+            let data1 = await response1.json()
             
+            let events = data1
+
+            var eventId = events[events.length-1].id 
+
             await fetch(`${SERVER}/userdata/${accountId}/accounts/${instaId}/events/${eventId}/hashtags`, {
                 method: 'post',
                 headers: {
@@ -37,7 +55,7 @@ class HashtagStore{
                 body: JSON.stringify(hashtag)
                 
             })
-            this.getHashtags(accountId,instaId,eventId)
+            this.getHashtags(accountId,instaId)
             
         }
         catch(err){
@@ -46,16 +64,22 @@ class HashtagStore{
         }
     }
 
-    async deleteHashtag(accountId, instaId, eventId, hashtagId){
+    async deleteHashtag(accountId, instaId, hashtagId){
         try{
            
-           
-           await fetch(`${SERVER}/userdata/${accountId}/accounts/${instaId}/events/${eventId}/hashtags`, {
+            let response1 = await fetch(`${SERVER}/userdata/${accountId}/accounts/${instaId}/events`)
+
+            let data1 = await response1.json()
+            
+            let events = data1
+
+            var eventId = events[events.length-1].id
+           await fetch(`${SERVER}/userdata/${accountId}/accounts/${instaId}/events/${eventId}/hashtags/${hashtagId}`, {
                method: 'delete'
                
                
            })
-           this.getAccounts(accountId)
+           this.getHashtags(accountId,instaId)
            
        }
        catch(err){

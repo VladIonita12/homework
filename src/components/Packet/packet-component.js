@@ -51,9 +51,9 @@ class PacketCard extends Component {
 
             }
             <Card.Text>Numar conturi disponibile: {this.props.item.numarConturi}</Card.Text>
-            <Button variant="primary" onClick={this.select} >Plateste</Button>
+            
           </Card.Body>
-
+            <Card.Footer><Button variant="primary" onClick={this.select} >Plateste</Button></Card.Footer>
         </Card>
 
       </div>
