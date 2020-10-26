@@ -102,7 +102,10 @@ class InstaAccount extends Component {
         }
         this.saveValue = () => {
             this.validAge()
-            if(this.state.wrongVarsta===true){
+            console.log(this.state.varstaMinima)
+            console.log(this.state.varstaMaxima)
+            console.log(this.state.varstaMinima <= this.state.varstaMaxima)
+            if(this.state.varstaMinima <= this.state.varstaMaxima){
             this.store.addEvents(this.props.accountId, this.props.item.id, {
                 varstaMin: this.state.varstaMinima,
                 varstaMax: this.state.varstaMaxima,
@@ -113,6 +116,9 @@ class InstaAccount extends Component {
             })
             
         }
+        else this.setState({
+            wrongVarsta:false
+        })
         
             
         }
@@ -202,11 +208,7 @@ class InstaAccount extends Component {
                         <Form.Control value={this.state.dataIncheiere} name="dataIncheiere" onChange={this.handleChange} type="date" />
                         <TimePicker name="timeEnd" onChange={this.handleTimeChange1} value={this.state.timeEnd} start="00:00" end="23:59" step={5} />
                     </Form.Group>
-                    {/* <Form.Group controlId="formHashtag">
-                        <Form.Label>Adaugare Hashtag</Form.Label>
-                        <Form.Control value={this.state.hashtag} name="hashtag" onChange={this.handleChange} />
-                        <Button onClick={this.saveHashtag}>Save hashtag</Button>
-                    </Form.Group> */}
+                    
 
                     {!this.state.wrongVarsta && <Alert variant={"danger"}>Varsta minima nu trebuie sa fie mai mare decat cea maxima</Alert>}
 
@@ -229,7 +231,7 @@ class InstaAccount extends Component {
                 <div className="hashtag-list">
                 {this.store1.hashtags.map((x,index) => <HashTag onDelete={this.delete} item={x} key={index}></HashTag>)}
                 </div>
-                {this.state.events.reverse().map((x, index) => <div className="container" key={index}><p key={index}>Event nr.{index+1} care se termina pe {this.state.events[index].endDate.substring(0, 10)} ora </p>
+                {this.state.events.reverse().map((x, index) => <div className="container" key={index}><p key={index}>Event nr.{this.state.events.length-index} care se termina pe {this.state.events[index].endDate.substring(0, 10)} ora </p>
                     <TimePicker disabled={true} value={this.state.events[index].endHour} step={1} className="timeEvent" />
                     <p> cu varsta cuprinsa intre {this.state.events[index].varstaMin} si {this.state.events[index].varstaMax}</p>
                     <hr></hr>
